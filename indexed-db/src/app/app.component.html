@@ -1,0 +1,63 @@
+<div class="wrapper">
+  <div class="title">Indexed DB using ngx-indexed-db</div>
+  <div class="buttons-wrapper">
+    <div>
+      <button (click)="countRows()"> Count rows in local db</button>
+      we have {{ totalRowsNoInTable }} rows in the local DB
+    </div>
+    <button (click)="addRecord()"> Add one record</button>
+    <button (click)="clearDBs()"> Clear DBs</button>
+    <div>
+      <input type="text" [(ngModel)]="searchId" placeholder="Id to search">
+      <button (click)="searchRecordById()"> Search by id</button>
+    </div>
+    <div>
+      <input type="text" [(ngModel)]="movieName" placeholder="movie name to search">
+      <button (click)="searchRecordByName()"> Search by name </button>
+    </div>
+    <div>
+      <input type="text" [(ngModel)]="recordsNo" placeholder="No Of Records to add">
+      <button (click)="addBulkRecords()">Generate records in local Db</button>
+    </div>
+    <div>
+      <div>
+      <button (click)="increaseRemoteTable()">Add 5k data in remote table</button>
+       - the new data added in the remote table will be visible in the UI after click on "Get Data from Remote table"
+    </div>
+    </div>
+    <div>
+      <button (click)="getRemoteData()">Get Data from Remote table</button>
+    </div>
+    <div>
+      <button (click)="updateRemoteDb()">Update remote DB with local changes</button>
+    </div>
+  </div>
+
+  <div class= "notification" > {{ userMessage }}</div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Actions</th>
+        <th *ngFor="let col of tableHeader()">{{ col }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of movieListFromLocalDb; let i = index">
+        <td>
+          <button (click)="deleteRow(i)"> Delete</button>
+          <!-- <button (click)="updateRow(row.id)"> Update</button> -->
+        </td>
+        <td *ngFor="let colVal of valuesInRow(i)">
+          {{colVal}}
+          <!-- <ng-container *ngIf="obj.age.entries[i]">
+            {{ obj.age.entries[i].value }}
+          </ng-container> -->
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+</div>
