@@ -83,21 +83,46 @@ def deleteRowsFromTable():
     return jsonify({'response': "rows deleted", 'success':"true"})
 
 
+@app.route("/updateRows", methods=["POST"])
+def updateRowsFromLocalTable():
+    data = request.get_json(force=True)
+    print("===>>> UPDATE records in the DB - ", data)
+    print("===>>> UPDATE records in the DB - ", data[0]['id'])
+    open_connection()
+    qInsert =""" UPDATE movies 
+                SET name = %s
+                WHERE id = %s """
+    for item in data:
+        # print('row = ',item['id'])
+        # print('row = ',item['name'])
+        # print('row = ',item['description_1'])
+        # print('row = ',item['description_2'])
+        # print('row = ',item['description_3'])
+        cursor.execute( qInsert, [item['name'], int(item['id']) ] )
+
+    # print("qdelere = " , qDelete)
+    # open_connection()
+    # cursor.execute(qDelete)
+    #resp =  cursor.fetchall()
+    close_connection()
+    return jsonify({'response': "ROWS UPDATED", 'success':"true"})
+
+
 @app.route("/addNewRows", methods=["POST"])
 def addRowsFromLocalTable():
     data = request.get_json(force=True)
     print("===>>> Add records in the DB - ", data)
     print("===>>> Add records in the DB - ", data[0]['id'])
     open_connection()
-    qInsert =""" INSERT INTO  movies ( id, name, type, description_1, description_2, description_3, description_4, description_5, description_6, description_7, description_8, description_9, description_10, created_year) VALUES
-                   (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s ) """
+    qInsert =""" INSERT INTO  movies ( name, type, description_1, description_2, description_3, description_4, description_5, description_6, description_7, description_8, description_9, description_10, created_year) VALUES
+                   (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s ) """
     for item in data:
         print('row = ',item['id'])
         print('row = ',item['name'])
         print('row = ',item['description_1'])
         print('row = ',item['description_2'])
         print('row = ',item['description_3'])
-        cursor.execute( qInsert, [int(item['id']), item['name'], item['type'], item['description_1'], item['description_2'], item['description_3'],
+        cursor.execute( qInsert, [item['name'], item['type'], item['description_1'], item['description_2'], item['description_3'],
                                    item['description_4'], item['description_5'], item['description_6'], item['description_7'], item['description_8'],
                                    item['description_9'], item['description_10'], item['created_year'] ] )
 
