@@ -15,10 +15,10 @@
       <input type="text" [(ngModel)]="movieName" placeholder="movie name to search">
       <button (click)="searchRecordByName()"> Search by name </button>
     </div>
-    <div>
+<!--     <div>
       <input type="text" [(ngModel)]="recordsNo" placeholder="No Of Records to add">
       <button (click)="addBulkRecords()">Generate records in local Db</button>
-    </div>
+    </div> -->
     <div>
       <div>
       <button (click)="increaseRemoteTable()">Add 5k data in remote table</button>
@@ -44,12 +44,14 @@
     </thead>
     <tbody>
       <tr *ngFor="let row of movieListFromLocalDb; let i = index">
-        <td>
+        <td class="button-wrapper">
           <button (click)="deleteRow(i)"> Delete</button>
-          <!-- <button (click)="updateRow(row.id)"> Update</button> -->
+          <button *ngIf="i != updateRowInd"(click)="updateRow(i)"> Update</button>
+          <button *ngIf="i == updateRowInd" (click)="saveUpdatedName(i)"> Save</button>
         </td>
-        <td *ngFor="let colVal of valuesInRow(i)">
-          {{colVal}}
+        <td *ngFor="let colVal of valuesInRow(i); let j = index">
+          <span *ngIf="i != updateRowInd || j!=1"> {{colVal}} </span>
+          <input type="text" *ngIf="i == updateRowInd && j==1" [(ngModel)] = "newName" >
           <!-- <ng-container *ngIf="obj.age.entries[i]">
             {{ obj.age.entries[i].value }}
           </ng-container> -->

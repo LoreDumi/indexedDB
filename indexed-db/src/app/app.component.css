@@ -36,6 +36,14 @@
     max-width: 300px;
 }
 
+.buttons-wrapper button:hover {
+    background-color: #232d61;
+}
+
+.buttons-wrapper button:active {
+    background-color: #525f9c;
+}
+
 .notification {
     color: red;
     font-size: 25px;
@@ -57,6 +65,19 @@ th {
 table tr:hover {
     background-color: #ddd;
 }
+
+table td.button-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+table td input {
+    width: 80%;
+    height: 30px;
+    border: 1px solid #232d61;
+    padding: 5px 10px;
+}
+
 table th {
     padding-top: 12px;
     padding-bottom: 12px;
